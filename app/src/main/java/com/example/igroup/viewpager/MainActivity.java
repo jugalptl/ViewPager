@@ -32,7 +32,7 @@ import java.util.List;
 public class MainActivity extends FragmentActivity {
 
     ViewPager mPager;
-    private static final int NUM_PAGES = 2;
+    private static final int NUM_PAGES = 5;
     private PagerAdapter mPagerAdapter;
     private FloatingActionButton email;
 
@@ -80,7 +80,7 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public Fragment getItem(int position) {
-                return new MyFragment();
+                return MyFragment.newInstance(String.valueOf(position +1),MainActivity.this);
             }
 
             @Override

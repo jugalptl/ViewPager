@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by iGroup on 7/21/2016.
@@ -22,7 +23,7 @@ public class MyFragment extends Fragment {
         contxt = context;
         MyFragment f = new MyFragment();
 
-        Bundle bdl = new Bundle(1);
+        Bundle bdl = new Bundle();
 
         bdl.putString(EXTRA_MESSAGE, message);
 
@@ -34,9 +35,33 @@ public class MyFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        String message = getArguments().getString(EXTRA_MESSAGE);
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_screen_slide_page, container, false);
+        TextView txt = (TextView) rootView.findViewById(R.id.txt);
+        String message = getArguments().getString(EXTRA_MESSAGE);
+        switch(message)
+        {
+            case "1" :
+                txt.setText("View Page 1");
+                break;
+            case "2" :
+                txt.setText("View Page 2");
+                break;
+            case "3" :
+                txt.setText("View Page 3");
+                break;
+            case "4" :
+                txt.setText("View Page 4");
+                break;
+            case "5" :
+                txt.setText("View Page 5");
+                break;
+
+            /*default:
+                txt.setText("View Page 1");
+                break;*/
+        }
 
         return rootView;
         /*View v = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
