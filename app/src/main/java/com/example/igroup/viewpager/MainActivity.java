@@ -26,15 +26,20 @@ import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements MaterialTabListener {
 
     ViewPager mPager;
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 3;
     private PagerAdapter mPagerAdapter;
     private FloatingActionButton email;
+    private MaterialTabHost tabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,28 @@ public class MainActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        tabHost = (MaterialTabHost)findViewById(R.id.materialTabHost);
+        mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tabHost.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        for(int i = 0; i<mPagerAdapter.getCount();i++){
+            tabHost.addTab(tabHost.newTab().setText(mPagerAdapter.getPageTitle(i)).setTabListener(MainActivity.this));
+        }
+
 
         email.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +100,27 @@ public class MainActivity extends FragmentActivity {
          * sequence.
          */
     }
+
+    @Override
+    public void onTabSelected(MaterialTab tab) {
+        mPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabReselected(MaterialTab tab) {
+
+    }
+
+    @Override
+    public void onTabUnselected(MaterialTab tab) {
+
+    }
+
     class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+           String[] tabs;
             public ScreenSlidePagerAdapter(FragmentManager fm) {
                 super(fm);
+                tabs = getResources().getStringArray(R.array.tabs);
             }
 
             @Override
@@ -83,7 +128,12 @@ public class MainActivity extends FragmentActivity {
                 return MyFragment.newInstance(String.valueOf(position +1),MainActivity.this);
             }
 
-            @Override
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabs[position];
+        }
+
+        @Override
             public int getCount() {
                 return NUM_PAGES;
             }

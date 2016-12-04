@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">ViewPager</string>
     <string name="action_settings">Settings</string>
+    <string-array name="tabs">
+        <item>Name</item>
+        <item>Address</item>
+        <item>Number</item>
+    </string-array>
 </resources>
+

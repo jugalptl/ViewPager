@@ -16,14 +16,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:id="@+id/txt"/>
+        android:id="@+id/txt"
+        android:visibility="gone"
+        />
+
+    <it.neokree.materialtabs.MaterialTabHost
+        android:id="@+id/materialTabHost"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:accentColor="@color/colorPrimary"
+        app:primaryColor="@color/subHeaderBack"
+        app:textColor="@color/selected" />
 
     <android.support.v4.view.ViewPager
 
         android:id="@+id/pager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt"
+        android:layout_below="@+id/materialTabHost"
         android:layout_weight="1"
         android:background="@android:color/white">
 
