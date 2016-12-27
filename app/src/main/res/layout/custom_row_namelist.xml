@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/clientCard"
+    android:layout_height="95dp"
+    android:orientation="horizontal"
+    android:background="@drawable/custom_bg_card"
+    android:clickable="true">
+
+    <!--<ImageView-->
+        <!--android:id="@+id/clientImage"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_margin="@dimen/table_top_margin" />-->
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/clientImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        fresco:placeholderImage="@color/white"
+        fresco:placeholderImageScaleType="fitCenter"
+        fresco:failureImage="@drawable/profilepicture"
+        android:layout_margin="@dimen/table_top_margin"
+        fresco:actualImageScaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/table_top_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/clientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Name"
+            android:textColor="@color/selected"
+            android:textSize="@dimen/head_tittle_text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/table_top_margin"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Address:"
+            android:textSize="@dimen/head_medium_tittle_text" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/table_top_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email:" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/abc_dropdownitem_text_padding_left"
+                android:textSize="@dimen/head_medium_tittle_text"
+                android:textColor="@color/selected" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+   </LinearLayout>

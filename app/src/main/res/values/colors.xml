@@ -6,4 +6,11 @@
     <color name="accentColor">#ff6c00</color>
     <color name="selected">#444444</color>
     <color name="subHeaderBack">#eeeeee</color>
+    <color name="unselected">#888888</color>
+    <color name="primary_text">#212121</color>
+    <color name="white">#ffffff</color>
+    <color name="header">#84bd3c</color>
+
+
+
 </resources>

@@ -1,11 +1,11 @@
 package com.example.igroup.viewpager;
 
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -24,14 +24,33 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.crashlytics.android.Crashlytics;
+import com.example.igroup.viewpager.Network.AppController;
+import com.example.igroup.viewpager.Network.VolleySingleton;
+import com.example.igroup.viewpager.Pojo.Clients;
+import com.facebook.drawee.backends.pipeline.Fresco;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.fabric.sdk.android.Fabric;
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.android.volley.Response.*;
 
 public class MainActivity extends FragmentActivity implements MaterialTabListener {
 
@@ -40,12 +59,18 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
     private PagerAdapter mPagerAdapter;
     private FloatingActionButton email;
     private MaterialTabHost tabHost;
+    VolleySingleton volleySingleton;
+    RequestQueue requestQueue;
+
+    ArrayList<Clients> clientArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // Fabric fabric = new Fabric.Builder(this).debuggable(true).kits(new Crashlytics(), new CrashlyticsNdk()).build();
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+        Fresco.initialize(this);
         // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // setSupportActionBar(toolbar);
 
@@ -75,7 +100,12 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
         for(int i = 0; i<mPagerAdapter.getCount();i++){
             tabHost.addTab(tabHost.newTab().setText(mPagerAdapter.getPageTitle(i)).setTabListener(MainActivity.this));
         }
-
+try {
+    sendJsonRequesr();
+}catch (Exception e)
+{
+    System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+e.toString());
+}
 
         email.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +129,64 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
          * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
          * sequence.
          */
+    }
+
+    private void sendJsonRequesr() {
+        JsonArrayRequest jsonArrayReq = new JsonArrayRequest(Request.Method.GET,"http://dev.trainerpl.us/api/v1/clients",null ,new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                /** parse server response */
+                clientArrayList = parseJSONResponse(response);
+                System.out.println(response.toString());
+
+                /** set layout */
+
+                /** on separate thread save client data into database */
+
+                /** hide progress dialog */
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            /**
+             * Passing some request headers
+             */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+               String auth1 = "Token 342e23dca28a376cd964e5acb50a5260eccda3b8";
+                //  String auth = (credentialSharedPreferences.getString(Keys.KEY_BASIC_AUTH, ""));
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization",auth1);
+                return headers;
+            }
+        };
+            //requestQueue.add(jsonArrayReq);
+
+        AppController.getInstance().addToRequestQueue(jsonArrayReq);
+    }
+
+    private ArrayList<Clients> parseJSONResponse(JSONArray response) {
+
+        ArrayList<Clients> clientDataList = new ArrayList<>();
+
+        for(int i = 0; i< response.length();i++)
+        {
+            try {
+                JSONObject currentClient = response.getJSONObject(i);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    return null;
     }
 
     @Override

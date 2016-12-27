@@ -4,12 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.igroup.viewpager.Adapters.NameAdapter;
+
+import org.w3c.dom.NameList;
 
 /**
  * Created by iGroup on 7/21/2016.
@@ -38,9 +44,10 @@ public class MyFragment extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_screen_slide_page, container, false);
-        TextView txt = (TextView) rootView.findViewById(R.id.txt);
+       // TextView txt = (TextView) rootView.findViewById(R.id.txt);
+
         String message = getArguments().getString(EXTRA_MESSAGE);
-        switch(message)
+        /*switch(message)
         {
             case "1" :
                 txt.setText("View Page 1");
@@ -56,12 +63,18 @@ public class MyFragment extends Fragment {
                 break;
             case "5" :
                 txt.setText("View Page 5");
-                break;
+                break;*/
 
             /*default:
                 txt.setText("View Page 1");
                 break;*/
-        }
+        /*}*/
+        RecyclerView nameList = (RecyclerView)rootView.findViewById(R.id.NameList);
+        nameList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        NameAdapter mAdapter = new NameAdapter(getActivity());
+        nameList.setAdapter(mAdapter);
+
 
         return rootView;
         /*View v = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
