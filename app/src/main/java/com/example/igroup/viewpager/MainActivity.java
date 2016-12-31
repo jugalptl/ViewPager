@@ -74,6 +74,37 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
         // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // setSupportActionBar(toolbar);
 
+        try {
+            sendJsonRequesr();
+        }catch (Exception e)
+        {
+            System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+e.toString());
+        }
+
+
+
+
+
+        /*@Override
+        public void onBackPressed() {
+            if (mPager.getCurrentItem() == 0) {
+                // If the user is currently looking at the first step, allow the system to handle the
+                // Back button. This calls finish() on this activity and pops the back stack.
+                super.onBackPressed();
+            } else {
+                // Otherwise, select the previous step.
+                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+            }
+        }*/
+
+        /**
+         * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+         * sequence.
+         */
+    }
+
+    private void setTabInfo() {
+
         mPager = (ViewPager) findViewById(R.id.pager);
         email = (FloatingActionButton) findViewById(R.id.fab);
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -100,35 +131,12 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
         for(int i = 0; i<mPagerAdapter.getCount();i++){
             tabHost.addTab(tabHost.newTab().setText(mPagerAdapter.getPageTitle(i)).setTabListener(MainActivity.this));
         }
-try {
-    sendJsonRequesr();
-}catch (Exception e)
-{
-    System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+e.toString());
-}
-
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 throw new RuntimeException("This is crash");
             }
         });
-        /*@Override
-        public void onBackPressed() {
-            if (mPager.getCurrentItem() == 0) {
-                // If the user is currently looking at the first step, allow the system to handle the
-                // Back button. This calls finish() on this activity and pops the back stack.
-                super.onBackPressed();
-            } else {
-                // Otherwise, select the previous step.
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-            }
-        }*/
-
-        /**
-         * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-         * sequence.
-         */
     }
 
     private void sendJsonRequesr() {
@@ -137,8 +145,9 @@ try {
             public void onResponse(JSONArray response) {
                 /** parse server response */
                 clientArrayList = parseJSONResponse(response);
-                System.out.println(response.toString());
+                System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"+clientArrayList.toString());
 
+                setTabInfo();
                 /** set layout */
 
                 /** on separate thread save client data into database */
@@ -146,6 +155,9 @@ try {
                 /** hide progress dialog */
 
             }
+
+
+
 
         }, new Response.ErrorListener() {
             @Override
@@ -181,12 +193,34 @@ try {
             try {
                 JSONObject currentClient = response.getJSONObject(i);
 
+                String fname = "";
+                String lname="";
+                String email="";
+                if(currentClient.has("first_name") && !currentClient.isNull("first_name"))
+                {
+                    fname = currentClient.getString("first_name");
+                }
+                if(currentClient.has("last_name") && !currentClient.isNull("last_name"))
+                {
+                     lname = currentClient.getString("last_name");
+                }
+                if(currentClient.has("email") && !currentClient.isNull("email"))
+                {
+                     email = currentClient.getString("email");
+                }
+
+                Clients newclient = new Clients();
+                newclient.setFirstName(fname);
+                newclient.setLastName(lname);
+                newclient.setEmail(email);
+                clientDataList.add(newclient);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-    return null;
+    return clientDataList;
     }
 
     @Override
@@ -213,7 +247,7 @@ try {
 
             @Override
             public Fragment getItem(int position) {
-                return MyFragment.newInstance(String.valueOf(position +1),MainActivity.this);
+                return MyFragment.newInstance(String.valueOf(position +1),MainActivity.this,clientArrayList);
             }
 
         @Override

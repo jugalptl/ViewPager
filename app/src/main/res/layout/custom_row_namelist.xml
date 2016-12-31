@@ -72,7 +72,9 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/abc_dropdownitem_text_padding_left"
                 android:textSize="@dimen/head_medium_tittle_text"
-                android:textColor="@color/selected" />
+                android:textColor="@color/selected"
+                android:ellipsize="end"
+                android:singleLine="true"/>
 
         </LinearLayout>
 

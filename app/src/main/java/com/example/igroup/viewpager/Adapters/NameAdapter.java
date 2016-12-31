@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.igroup.viewpager.Pojo.Clients;
 import com.example.igroup.viewpager.R;
 
 import org.w3c.dom.Text;
@@ -29,14 +30,18 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.ViewHolderName
     public String[] email = new String[5];
     //public ArrayList<Clients> tempClientsList;
     protected Context context;
+    public ArrayList<Clients> tempClientsList = new ArrayList<>();
+    Clients currentClient;
 
-    public NameAdapter(Context context) {
+    public NameAdapter(Context context, ArrayList<Clients> clientArrayList) {
 
         name = new String[]{"Jugal", "Ravi", "Divyang", "Mirav", "Maddy"};
         add = new String[]{"Canada","Vadodara","Padra","Canada","Gorva"};
        ContactInfo.add(name);
         ContactInfo.add(add);
        // this.clientsList = tempClientsList;
+        this.tempClientsList = clientArrayList;
+        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+clientArrayList.toString() );
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         //notifyItemRangeChanged(0, clientsList.size());
@@ -67,8 +72,21 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.ViewHolderName
             }
         }*/
 
-            holder.Name.setText(name[position]);
-            holder.Address.setText(add[position]);
+        currentClient = tempClientsList.get(position + 1);
+
+        if(!currentClient.getFirstName().equals(null) && currentClient.getFirstName() != null)
+        {
+            holder.Name.setText(currentClient.getFirstName().substring(0,1).toUpperCase() + currentClient.getFirstName().substring(1).toString());
+        }
+        else
+        {
+            holder.Name.setText("");
+        }
+
+          //  holder.Name.setText(name[position]);
+            holder.Address.setText(currentClient.getLastName().toString());
+        holder.Email.setText(currentClient.getEmail().toString());
+
 
     }
 

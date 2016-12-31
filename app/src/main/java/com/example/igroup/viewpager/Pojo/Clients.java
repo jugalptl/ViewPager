@@ -26,7 +26,7 @@ public class Clients implements Parcelable {
     public String status;
     public String units;
 
-    protected Clients(Parcel in) {
+    public Clients(Parcel in) {
         clientId = in.readInt();
         firstName = in.readString();
         lastName = in.readString();
@@ -41,6 +41,8 @@ public class Clients implements Parcelable {
         photo = in.readString();
         status = in.readString();
         units = in.readString();
+    }
+    public Clients() {
     }
 
     public static final Creator<Clients> CREATOR = new Creator<Clients>() {

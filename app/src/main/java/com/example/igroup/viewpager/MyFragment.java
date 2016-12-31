@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.igroup.viewpager.Adapters.NameAdapter;
+import com.example.igroup.viewpager.Pojo.Clients;
 
 import org.w3c.dom.NameList;
+
+import java.util.ArrayList;
 
 /**
  * Created by iGroup on 7/21/2016.
@@ -24,9 +27,11 @@ public class MyFragment extends Fragment {
 
     public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
     static Context contxt;
+    public static ArrayList<Clients> clientArrayList;
 
-    public static MyFragment newInstance(String message, Context context) {
+    public static MyFragment newInstance(String message, Context context, ArrayList<Clients> clientList) {
         contxt = context;
+        clientArrayList = clientList;
         MyFragment f = new MyFragment();
 
         Bundle bdl = new Bundle();
@@ -71,8 +76,8 @@ public class MyFragment extends Fragment {
         /*}*/
         RecyclerView nameList = (RecyclerView)rootView.findViewById(R.id.NameList);
         nameList.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        NameAdapter mAdapter = new NameAdapter(getActivity());
+        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"+clientArrayList.toString());
+        NameAdapter mAdapter = new NameAdapter(getActivity(),clientArrayList);
         nameList.setAdapter(mAdapter);
 
 
