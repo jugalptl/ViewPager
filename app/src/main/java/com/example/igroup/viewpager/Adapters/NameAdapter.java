@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.igroup.viewpager.Pojo.Clients;
 import com.example.igroup.viewpager.R;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.w3c.dom.Text;
 
@@ -84,8 +85,9 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.ViewHolderName
         }
 
           //  holder.Name.setText(name[position]);
-            holder.Address.setText(currentClient.getLastName().toString());
+        holder.Address.setText(currentClient.getLastName().toString());
         holder.Email.setText(currentClient.getEmail().toString());
+        holder.profile.setBackgroundResource(R.drawable.profilepicture);
 
 
     }
@@ -98,12 +100,14 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.ViewHolderName
     public class ViewHolderNames extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView Name,Address,Email;
+        SimpleDraweeView profile;
 
         public ViewHolderNames(View itemView) {
             super(itemView);
             Name = (TextView) itemView.findViewById(R.id.clientName);
             Address = (TextView)itemView.findViewById(R.id.address);
             Email=(TextView)itemView.findViewById(R.id.email);
+            profile=(SimpleDraweeView)itemView.findViewById(R.id.clientImage);
 
         }
 

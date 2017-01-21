@@ -8,25 +8,18 @@
     android:background="@drawable/custom_bg_card"
     android:clickable="true">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/clientImage"-->
-        <!--android:layout_width="80dp"-->
-        <!--android:layout_height="80dp"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_margin="@dimen/table_top_margin" />-->
-
-
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/clientImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="fitXY"
         android:layout_gravity="center"
-        fresco:placeholderImage="@color/white"
+
         fresco:placeholderImageScaleType="fitCenter"
         fresco:failureImage="@drawable/profilepicture"
         android:layout_margin="@dimen/table_top_margin"
         fresco:actualImageScaleType="centerCrop"/>
+    <!--fresco:placeholderImage="@color/white"-->
 
     <LinearLayout
         android:layout_width="wrap_content"
