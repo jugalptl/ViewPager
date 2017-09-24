@@ -4,48 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<!--
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/actionButton"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentTop="true"
-        android:padding="20dp"
-        fresco:actualImageScaleType="fitCenter"/>-->
 
-   <!-- <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <Button
-        android:id="@+id/actionButton"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/skip"
-        />-->
-
-
-   <!-- <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </ScrollView>
--->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/NameList"
         android:layout_width="fill_parent"

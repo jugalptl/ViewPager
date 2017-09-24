@@ -21,7 +21,7 @@ import org.w3c.dom.NameList;
 import java.util.ArrayList;
 
 /**
- * Created by iGroup on 7/21/2016.
+ * Created by iGroup on 3/18/2017.
  */
 public class MyFragment extends Fragment {
 
@@ -52,76 +52,13 @@ public class MyFragment extends Fragment {
        // TextView txt = (TextView) rootView.findViewById(R.id.txt);
 
         String message = getArguments().getString(EXTRA_MESSAGE);
-        /*switch(message)
-        {
-            case "1" :
-                txt.setText("View Page 1");
-                break;
-            case "2" :
-                txt.setText("View Page 2");
-                break;
-            case "3" :
-                txt.setText("View Page 3");
-                break;
-            case "4" :
-                txt.setText("View Page 4");
-                break;
-            case "5" :
-                txt.setText("View Page 5");
-                break;*/
 
-            /*default:
-                txt.setText("View Page 1");
-                break;*/
-        /*}*/
         RecyclerView nameList = (RecyclerView)rootView.findViewById(R.id.NameList);
         nameList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"+clientArrayList.toString());
         NameAdapter mAdapter = new NameAdapter(getActivity(),clientArrayList);
         nameList.setAdapter(mAdapter);
 
 
         return rootView;
-        /*View v = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
-        ImageView image = (ImageView) v.findViewById(R.id.imageView);
-        Button actionButton = (Button) v.findViewById(R.id.actionButton);
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // callActivity(contxt);
-            }
-        });
-        // load image
-
-        Uri uri;
-        switch (message) {
-            case "1":
-                uri = Uri.parse("assets:///slide1.png");
-                break;
-            case "2":
-                uri = Uri.parse("assets:///slide2.png");
-                break;
-            case "3":
-                uri = Uri.parse("assets:///slide3.png");
-                break;
-            case "4":
-                uri = Uri.parse("assets:///slide4.png");
-                break;
-            case "5":
-                uri = Uri.parse("assets:///slide5.png");
-                break;
-            case "6":
-                uri = Uri.parse("assets:///slide6.png");
-                break;
-            case "7":
-                uri = Uri.parse("assets:///slide7.png");
-                actionButton.setBackgroundResource(R.drawable.skip);
-                break;
-            default:
-                uri = Uri.parse("asset:///slide1.png");
-                break;
-        }
-        image.setImageURI(uri);
-        *///return v;
     }
 }

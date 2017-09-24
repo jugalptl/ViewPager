@@ -4,21 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.igroup.viewpager.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+   <!-- <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         android:id="@+id/txt"
-        android:visibility="gone"
-        />
+        android:textColor="@android:color/black"
+        android:visibility="visible"
+        />--><!--
+        android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"-->
 
     <it.neokree.materialtabs.MaterialTabHost
         android:id="@+id/materialTabHost"
@@ -26,7 +27,7 @@
         android:layout_height="48dp"
         app:accentColor="@color/header"
         app:primaryColor="@color/subHeaderBack"
-        app:textColor="@color/selected" />
+        app:textColor="@android:color/black"/>
 
     <android.support.v4.view.ViewPager
 

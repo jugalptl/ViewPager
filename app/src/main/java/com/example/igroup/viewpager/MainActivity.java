@@ -1,28 +1,17 @@
 package com.example.igroup.viewpager;
 
 
-import android.app.DownloadManager;
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.crashlytics.android.Crashlytics;
 import com.example.igroup.viewpager.Network.AppController;
+import com.example.igroup.viewpager.Network.CheckNetwork;
 import com.example.igroup.viewpager.Network.VolleySingleton;
 import com.example.igroup.viewpager.Pojo.Clients;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -47,10 +37,8 @@ import it.neokree.materialtabs.MaterialTabListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static com.android.volley.Response.*;
 
 public class MainActivity extends FragmentActivity implements MaterialTabListener {
 
@@ -61,6 +49,8 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
     private MaterialTabHost tabHost;
     VolleySingleton volleySingleton;
     RequestQueue requestQueue;
+    String tabs[];
+
 
     ArrayList<Clients> clientArrayList = new ArrayList<>();
 
@@ -68,49 +58,52 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // Fabric fabric = new Fabric.Builder(this).debuggable(true).kits(new Crashlytics(), new CrashlyticsNdk()).build();
+
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         Fresco.initialize(this);
         // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // setSupportActionBar(toolbar);
 
-        try {
-            sendJsonRequesr();
-        }catch (Exception e)
-        {
-            System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+e.toString());
-        }
 
 
+                try {
 
-
-
-        /*@Override
-        public void onBackPressed() {
-            if (mPager.getCurrentItem() == 0) {
-                // If the user is currently looking at the first step, allow the system to handle the
-                // Back button. This calls finish() on this activity and pops the back stack.
-                super.onBackPressed();
-            } else {
-                // Otherwise, select the previous step.
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+                    sendJsonRequesr();
+            }catch (Exception e)
+            {
+                System.out.println(e.toString());
             }
-        }*/
 
-        /**
-         * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-         * sequence.
-         */
+
+
     }
+
 
     private void setTabInfo() {
 
         mPager = (ViewPager) findViewById(R.id.pager);
         email = (FloatingActionButton) findViewById(R.id.fab);
-        mPager = (ViewPager) findViewById(R.id.pager);
+       // mPager = (ViewPager) findViewById(R.id.pager);
+
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+
+        mPagerAdapter.notifyDataSetChanged();
         mPager.setAdapter(mPagerAdapter);
         tabHost = (MaterialTabHost)findViewById(R.id.materialTabHost);
+       /* for(int i = 0; i<mPagerAdapter.getCount();i++){
+            tabHost.addTab(tabHost.newTab().setText(mPagerAdapter.getPageTitle(i)).setTabListener(MainActivity.this));
+        }*/
+
+        for (int i = 0; i < tabs.length; i++) {
+            tabHost.addTab(
+                    tabHost.newTab()
+                            .setText(tabs[i])
+                            .setTabListener(MainActivity.this)
+            );
+
+            System.out.println("55555555555555555555555555555555555555555555555555555555555555"+tabs[i]);
+        }
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -128,9 +121,9 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
             }
         });
 
-        for(int i = 0; i<mPagerAdapter.getCount();i++){
-            tabHost.addTab(tabHost.newTab().setText(mPagerAdapter.getPageTitle(i)).setTabListener(MainActivity.this));
-        }
+
+
+        mPagerAdapter.notifyDataSetChanged();
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,15 +138,7 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
             public void onResponse(JSONArray response) {
                 /** parse server response */
                 clientArrayList = parseJSONResponse(response);
-                System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"+clientArrayList.toString());
-
                 setTabInfo();
-                /** set layout */
-
-                /** on separate thread save client data into database */
-
-                /** hide progress dialog */
-
             }
 
 
@@ -171,15 +156,15 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
              */
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-               String auth1 = "Token 342e23dca28a376cd964e5acb50a5260eccda3b8";
-                //  String auth = (credentialSharedPreferences.getString(Keys.KEY_BASIC_AUTH, ""));
+               String auth1 = "Token 13cc2add9f14af86bc0a874be774153f94320fb7";
+                //342e23dca28a376cd964e5acb50a5260eccda3b8
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
                 headers.put("Authorization",auth1);
                 return headers;
             }
         };
-            //requestQueue.add(jsonArrayReq);
+
 
         AppController.getInstance().addToRequestQueue(jsonArrayReq);
     }
@@ -239,7 +224,7 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
     }
 
     class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-           String[] tabs;
+           //String[] tabs;
             public ScreenSlidePagerAdapter(FragmentManager fm) {
                 super(fm);
                 tabs = getResources().getStringArray(R.array.tabs);
@@ -263,44 +248,4 @@ public class MainActivity extends FragmentActivity implements MaterialTabListene
     }
 
 
-/*
-    }
 
-
-
-    public List<Fragment> getFragments(Context context) {
-        List<Fragment> fList = new ArrayList<Fragment>();
-        fList.add(MyFragment.newInstance("1", context));
-        fList.add(MyFragment.newInstance("2", context));
-        fList.add(MyFragment.newInstance("3", context));
-        fList.add(MyFragment.newInstance("4", context));
-        fList.add(MyFragment.newInstance("5", context));
-        fList.add(MyFragment.newInstance("6", context));
-        fList.add(MyFragment.newInstance("7", context));
-        return fList;
-
-    }
-}
-*/
-
-
-
-/*
-class MyPageAdapter extends FragmentPagerAdapter {
-    private List<Fragment> fragments;
-
-    public MyPageAdapter(FragmentManager fm, List<Fragment> fragments) {
-        super(fm);
-        this.fragments = fragments;
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        return this.fragments.get(position);
-    }
-
-    @Override
-    public int getCount() {
-        return this.fragments.size();
-    }
-}*/

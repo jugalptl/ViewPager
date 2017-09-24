@@ -9,7 +9,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Created by iGroup on 12/24/2016.
+ * Created by iGroup on 3/18/2017.
  */
 
 
@@ -19,7 +19,7 @@ public class AppController extends Application {
             .getSimpleName();
 
     private RequestQueue mRequestQueue;
-   // private ImageLoader mImageLoader;
+
 
     private static AppController mInstance;
 
@@ -41,15 +41,7 @@ public class AppController extends Application {
         return mRequestQueue;
     }
 
-   /* public ImageLoader getImageLoader() {
-        getRequestQueue();
-        if (mImageLoader == null) {
-            mImageLoader = new ImageLoader(this.mRequestQueue,
-                    new LruBitmapCache());
-        }
-        return this.mImageLoader;
-    }
-*/
+
     public <T> void addToRequestQueue(Request<T> req, String tag) {
         // set the default tag if tag is empty
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
